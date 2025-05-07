@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,5 +47,10 @@ public class ClienteController {
             Cliente clienteActualizado = clienteRepository.save(clienteExistente);
             return ResponseEntity.ok(clienteActualizado);
         }).orElse(ResponseEntity.notFound().build());
+    }
+    //// Eliminar un cliente de la base de datos
+    @DeleteMapping("/eliminar-Cliente/{id}")
+    public void eliminarCliente(@PathVariable Long id) {
+        clienteRepository.deleteById(id);
     }
 }
