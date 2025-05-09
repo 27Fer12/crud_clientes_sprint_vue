@@ -28,6 +28,16 @@ public class ClienteController {
     public List<Cliente> traerClientes() {
         return clienteRepository.findAll();
     }
+    @GetMapping("/traer-Cliente/{id}")
+    public ResponseEntity<Cliente> TraerUnCliente(@PathVariable Long id) {
+        return clienteRepository.findById(id)
+                .map(cliente -> ResponseEntity.ok(cliente))
+                .orElse(ResponseEntity.notFound().build());
+    }
+    
+
+    
+        
 
     // Insertar un nuevo cliente
     @PostMapping("/insertarCliente")
