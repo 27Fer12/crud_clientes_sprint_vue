@@ -14,15 +14,15 @@ public class Cliente {
     private Long id;
     private String nombre;
     private String apellidos;
-    private String dni; // Documento de identidad, puede ser DNI o similar
+    private String dni; 
     private String telefono;
     private String email;
 
-    // Constructor vacío necesario para JPA
+    
     public Cliente() {
     }
 
-    // Constructor con parámetros para crear un cliente con los datos principales
+  
     public Cliente(String nombre, String apellidos, String dni, String telefono, String email) {
         this.nombre = nombre;
         this.apellidos = apellidos;

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,34 +19,29 @@ import com.fer.Clientes.repository.ClienteRepository;
 
 @RestController
 @RequestMapping("/clientes")
+@CrossOrigin(origins = "*")
 public class ClienteController {
 
     @Autowired
     private ClienteRepository clienteRepository;
 
-    // Obtener todos los clientes
     @GetMapping("/traerClientes")
     public List<Cliente> traerClientes() {
         return clienteRepository.findAll();
     }
+
     @GetMapping("/traer-Cliente/{id}")
-    public ResponseEntity<Cliente> TraerUnCliente(@PathVariable Long id) {
+    public ResponseEntity<Cliente> traerUnCliente(@PathVariable Long id) {
         return clienteRepository.findById(id)
-                .map(cliente -> ResponseEntity.ok(cliente))
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-    
 
-    
-        
-
-    // Insertar un nuevo cliente
     @PostMapping("/insertarCliente")
     public Cliente insertarCliente(@RequestBody Cliente cliente) {
         return clienteRepository.save(cliente);
     }
 
-    // Editar un cliente existente
     @PutMapping("/editar-Cliente/{id}")
     public ResponseEntity<Cliente> actualizarCliente(@PathVariable Long id, @RequestBody Cliente cliente) {
         return clienteRepository.findById(id).map(clienteExistente -> {
@@ -58,7 +54,7 @@ public class ClienteController {
             return ResponseEntity.ok(clienteActualizado);
         }).orElse(ResponseEntity.notFound().build());
     }
-    //// Eliminar un cliente de la base de datos
+
     @DeleteMapping("/eliminar-Cliente/{id}")
     public void eliminarCliente(@PathVariable Long id) {
         clienteRepository.deleteById(id);
